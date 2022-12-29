@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "bot_start",
+            "type": "python",
+            "request": "launch",
+            "module": "bot",
+            "console": "internalConsole",
+            "justMyCode": true
+        }
+    ]
+}
