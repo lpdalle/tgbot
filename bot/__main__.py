@@ -1,9 +1,10 @@
 import logging
 
+from telegram import BotCommand
 from telegram.ext import CommandHandler, Updater
 
-import settings
 from bot.utils.utils import add_generation, start
+from settings import API_KEY
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -13,9 +14,15 @@ logging.basicConfig(
 
 
 def main():
-    my_bot = Updater(settings.API_KEY, use_context=True)
+    my_bot = Updater(API_KEY, use_context=True)
 
     dp = my_bot.dispatcher
+    cmnd = []
+    cmnd.append(BotCommand('start', 'Start a bot'))
+    cmnd.append(BotCommand('mygenerations', 'See all my generations'))
+    cmnd.append(BotCommand('generate', 'Generate an image by string'))
+    my_bot.bot.set_my_commands(cmnd)
+
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('generate', add_generation))
 

@@ -1,4 +1,4 @@
-import requests
+import httpx
 
 base_url = 'http://127.0.0.1:5000'
 
@@ -14,7 +14,7 @@ class GenerationClient:
             'status': status,
         }
         headers = {'Content-Type': 'application/json'}
-        response = requests.request('POST', url, json=generation, headers=headers)
+        response = httpx.post(url, json=generation, headers=headers)
         response.raise_for_status()
 
 
