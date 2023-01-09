@@ -19,7 +19,6 @@ class UserClient:
         response.raise_for_status()
         if response.status_code == 404:  # noqa: WPS432
             return None
-        print(response)
         return response.json()
 
     def add(self, login: str, email: str, telegram_id=None):
