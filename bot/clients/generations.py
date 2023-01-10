@@ -5,7 +5,7 @@ class GenerationClient:
     def __init__(self, url) -> None:
         self.url = url
 
-    def get_user_generations(self, user_id: int):
+    def get_for_user(self, user_id: int):
         url = f'{self.url}/api/v1/users/{user_id}'
         response = httpx.get(url)
         response.raise_for_status()
