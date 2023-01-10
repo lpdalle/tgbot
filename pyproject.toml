@@ -2,7 +2,7 @@
 name = "tgbot"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Artem Voskresensky <metravs@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
