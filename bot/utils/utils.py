@@ -1,10 +1,25 @@
-from bot.api_client import api
+from bot.clients.api import api
 
 
 def start(update, _):
+    telegram_id = update.message.chat.id
     update.message.reply_text('Welcome to lpdalle bot!')
+    api.users.get_by_tg_id(telegram_id)
 
 
-def add_generation(update, context):
+def add_generation(update, _):
+    telegram_id = update.message.chat.id
     update.message.reply_text('Add a generation')
-    api.generation.add(17, prompt='розовый слон на дирижабле', status='done')  # noqa: WPS432
+    user_response = api.users.get_by_tg_id(telegram_id)
+    if not user_response:
+        api.users.add(
+            login='topcoder',
+            email='awesomemail@foo.com',
+            telegram_id=telegram_id,
+        )
+    user_id = user_response['uid']
+    api.generation.add(
+        user_id=user_id,
+        prompt='выхухоль в дирижабле',
+        status='done',
+    )
