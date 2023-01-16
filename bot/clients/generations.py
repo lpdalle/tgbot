@@ -6,7 +6,7 @@ class GenerationClient:
         self.url = url
 
     def get_for_user(self, user_id: int):
-        url = f'{self.url}/api/v1/users/{user_id}'
+        url = f'{self.url}/api/v1/users/{user_id}/generation/'
         response = httpx.get(url)
         response.raise_for_status()
         if response.status_code == 404:  # noqa: WPS432

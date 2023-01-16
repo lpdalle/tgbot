@@ -2,7 +2,7 @@ import logging
 
 from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 
-from bot.utils.handlers import add_generation, start, start_dialogue
+from bot.utils.handlers import add_generation, get_user_generations, start, start_dialogue
 from bot.utils.menu import cmnd
 from settings import API_KEY
 
@@ -29,6 +29,7 @@ def main() -> None:
     )
 
     dp.add_handler(CommandHandler('start', start))
+    dp.add_handler(CommandHandler('mygenerations', get_user_generations))
     dp.add_handler(get_generation)
 
     logger.info('Bot has started')

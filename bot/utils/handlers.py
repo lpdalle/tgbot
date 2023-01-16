@@ -3,7 +3,15 @@ from telegram import ReplyKeyboardMarkup
 from bot.clients.api import api
 
 
-def start(update, context):
+def get_user_generations(update, _) -> None:
+    telegram_id = update.message.chat.id
+    user = api.users.get_by_tg_id(telegram_id)
+    generations = api.generation.get_for_user(user['uid'])
+    for gen in generations:
+        update.message.reply_text(gen['prompt'])
+
+
+def start(update, _):
     update.message.reply_text('Welcome to lpdalle bot!', reply_markup=main_keyboard())
 
 
