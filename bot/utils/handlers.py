@@ -1,4 +1,5 @@
 from telegram import ReplyKeyboardMarkup
+from telegram.ext import ConversationHandler
 
 from bot.clients.api import api
 
@@ -15,14 +16,14 @@ def start(update, _):
     update.message.reply_text('Welcome to lpdalle bot!', reply_markup=main_keyboard())
 
 
-def add_generation(update, context):
+def add_generation(update, _):
     telegram_id = update.message.chat.id
     text = update.message.text
     update.message.reply_text('Добавляем генерацию')
     user = api.users.get_by_tg_id(telegram_id)
-    login = update.message.chat.first_name.lower()
 
     if not user:
+        login = update.message.chat.first_name.lower()
         api.users.add(
             login=login,
             email='awesomemail@foo.com',
@@ -34,12 +35,13 @@ def add_generation(update, context):
         prompt=text,
         status='pending',
     )
+    return ConversationHandler.END
 
 
 def main_keyboard():
     return ReplyKeyboardMarkup([['Генерировать картинку']], resize_keyboard=True)
 
 
-def start_dialogue(update, context):
+def start_dialogue(update, _):
     update.message.reply_text('Введите текст для генерации', reply_markup=main_keyboard())
     return 'text'
