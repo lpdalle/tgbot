@@ -1,9 +1,9 @@
 import logging
 
-from telegram import BotCommand
-from telegram.ext import CommandHandler, Updater
+from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 
-from bot.utils.utils import add_generation, start
+from bot.utils.handlers import add_generation, get_user_generations, start, start_dialogue
+from bot.utils.menu import cmnd
 from settings import API_KEY
 
 logger = logging.getLogger(__name__)
@@ -13,18 +13,24 @@ logging.basicConfig(
 )
 
 
-def main():
+def main() -> None:
     my_bot = Updater(API_KEY, use_context=True)
 
-    dp = my_bot.dispatcher
-    cmnd = []
-    cmnd.append(BotCommand('start', 'Start a bot'))
-    cmnd.append(BotCommand('mygenerations', 'See all my generations'))
-    cmnd.append(BotCommand('generate', 'Generate an image by string'))
-    my_bot.bot.set_my_commands(cmnd)
+    dp = my_bot.dispatcher  # type: ignore
+
+    my_bot.bot.set_my_commands(cmnd)  # type: ignore
+
+    get_generation = ConversationHandler(
+        entry_points=[MessageHandler(
+            Filters.regex('^(Генерировать картинку)|(generate)$'), start_dialogue,
+        )],
+        states={'text': [MessageHandler(Filters.text, add_generation)]},
+        fallbacks=[],
+    )
 
     dp.add_handler(CommandHandler('start', start))
-    dp.add_handler(CommandHandler('generate', add_generation))
+    dp.add_handler(CommandHandler('mygenerations', get_user_generations))
+    dp.add_handler(get_generation)
 
     logger.info('Bot has started')
     my_bot.start_polling()
