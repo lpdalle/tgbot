@@ -1,5 +1,7 @@
 import httpx
 
+from bot.clients.schema import User
+
 
 class UserClient:
     def __init__(self, url: str) -> None:
@@ -11,7 +13,7 @@ class UserClient:
         response.raise_for_status()
         if response.status_code == 404:  # noqa: WPS432
             return None
-        return response.json()
+        return User(**response.json())
 
     def get_by_tg_id(self, telegram_id: str):
         url = f'{self.url}/api/v1/users/telegram/{telegram_id}'
@@ -19,7 +21,7 @@ class UserClient:
         response.raise_for_status()
         if response.status_code == 404:  # noqa: WPS432
             return None
-        return response.json()
+        return User(**response.json())
 
     def add(self, login: str, email: str, telegram_id=None):
         url = f'{self.url}/api/v1/users/'

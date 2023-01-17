@@ -16,9 +16,9 @@ logging.basicConfig(
 def main() -> None:
     my_bot = Updater(API_KEY, use_context=True)
 
-    dp = my_bot.dispatcher
+    dp = my_bot.dispatcher  # type: ignore
 
-    my_bot.bot.set_my_commands(cmnd)
+    my_bot.bot.set_my_commands(cmnd)  # type: ignore
 
     get_generation = ConversationHandler(
         entry_points=[MessageHandler(
