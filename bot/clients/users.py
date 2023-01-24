@@ -18,7 +18,6 @@ class UserClient:
     def get_by_tg_id(self, telegram_id: str):
         url = f'{self.url}/api/v1/users/telegram/{telegram_id}'
         response = httpx.get(url)
-        response.raise_for_status()
         if response.status_code == 404:  # noqa: WPS432
             return None
         return User(**response.json())

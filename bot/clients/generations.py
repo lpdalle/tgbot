@@ -24,4 +24,14 @@ class GenerationClient:
         }
         headers = {'Content-Type': 'application/json'}
         response = httpx.post(url, json=generation, headers=headers)
-        response.raise_for_status()
+        return Generation(**response.json())
+
+    def get_image(self, generation_id: int):
+        url = f'{self.url}/api/v1/generations/{generation_id}/image'
+        response = httpx.get(url)
+        return response.content
+
+    def check_status(self, generation_id: int):
+        url = f'{self.url}/api/v1/generations/{generation_id}/complete'
+        response = httpx.get(url)
+        return Generation(**response.json())

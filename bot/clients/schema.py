@@ -8,3 +8,4 @@ class User(BaseModel):
 class Generation(BaseModel):
     uid: int
     prompt: str
+    status: str

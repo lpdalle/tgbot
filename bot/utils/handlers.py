@@ -16,7 +16,7 @@ def get_user_generations(update, _) -> None:
         update.message.reply_text(gen.prompt)
 
 
-def add_generation(update, _):
+def add_generation(update, context):
     telegram_id = update.message.chat.id
     text = update.message.text
     update.message.reply_text('Добавляем генерацию')
@@ -29,9 +29,10 @@ def add_generation(update, _):
             email='awesomemail@foo.com',
             telegram_id=telegram_id,
         )
-    user_id = user.uid
+        user = api.users.get_by_tg_id(telegram_id)
+
     api.generation.add(
-        user_id=user_id,
+        user_id=user.uid,
         prompt=text,
         status='pending',
     )
