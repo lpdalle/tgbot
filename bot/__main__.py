@@ -6,11 +6,11 @@ from bot.utils.handlers import add_generation, get_user_generations, start, star
 from bot.utils.menu import cmnd
 from settings import API_KEY
 
-logger = logging.getLogger(__name__)
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:
@@ -30,6 +30,7 @@ def main() -> None:
 
     dp.add_handler(CommandHandler('start', start))
     dp.add_handler(CommandHandler('mygenerations', get_user_generations))
+
     dp.add_handler(get_generation)
 
     logger.info('Bot has started')
