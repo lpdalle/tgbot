@@ -32,6 +32,6 @@ class GenerationClient:
         return response.content
 
     def check_status(self, generation_id: int):
-        url = f'{self.url}/api/v1/generations/{generation_id}/complete'
+        url = f'{self.url}/api/v1/generations/{generation_id}'
         response = httpx.get(url)
         return Generation(**response.json())
