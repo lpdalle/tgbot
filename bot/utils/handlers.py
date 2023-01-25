@@ -2,6 +2,7 @@ from telegram import ReplyKeyboardMarkup
 from telegram.ext import ConversationHandler
 
 from bot.clients.api import api
+from bot.utils.job import start_job
 
 
 def start(update, _):
@@ -31,11 +32,19 @@ def add_generation(update, context):
         )
         user = api.users.get_by_tg_id(telegram_id)
 
-    api.generation.add(
+    generation = api.generation.add(
         user_id=user.uid,
         prompt=text,
         status='pending',
     )
+
+    context.job_queue.run_repeating(
+        start_job,
+        interval=5,
+        first=5,
+        context=[telegram_id, generation.uid],
+    )
+
     return ConversationHandler.END
 
 

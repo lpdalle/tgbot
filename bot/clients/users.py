@@ -10,9 +10,9 @@ class UserClient:
     def get_by_id(self, user_id: int):
         url = f'{self.url}/api/v1/users/{user_id}'
         response = httpx.get(url)
-        response.raise_for_status()
         if response.status_code == 404:  # noqa: WPS432
             return None
+        response.raise_for_status()
         return User(**response.json())
 
     def get_by_tg_id(self, telegram_id: str):
@@ -20,6 +20,7 @@ class UserClient:
         response = httpx.get(url)
         if response.status_code == 404:  # noqa: WPS432
             return None
+        response.raise_for_status()
         return User(**response.json())
 
     def add(self, login: str, email: str, telegram_id=None):
