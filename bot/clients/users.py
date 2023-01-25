@@ -31,5 +31,5 @@ class UserClient:
             'telegram_id': telegram_id,
         }
         headers = {'Content-Type': 'application/json'}
-        response = httpx.post(url, json=user, headers=headers)
+        response = httpx.post(url, json=user, headers=headers, timeout=10)
         response.raise_for_status()

@@ -8,7 +8,7 @@ def start_job(context) -> None:
     generation = api.generation.check_status(generation_id)
 
     if generation.status != 'complete':
-        context.bot.send_message(job.context[0], text='we are working on your task')
+        context.bot.send_message(job.context[0], text='картинка генерируется')
         return
 
     image = api.generation.get_image(generation_id)
