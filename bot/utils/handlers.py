@@ -6,7 +6,7 @@ from bot.utils.job import start_job
 
 
 def start(update, _):
-    update.message.reply_text('Welcome to lpdalle bot!', reply_markup=main_keyboard())
+    update.message.reply_text('Добро пожаловать в lpdalle bot!', reply_markup=main_keyboard())
 
 
 def get_user_generations(update, _) -> None:
@@ -27,7 +27,7 @@ def add_generation(update, context):
         login = update.message.chat.first_name.lower()
         api.users.add(
             login=login,
-            email='awesomemail@foo.com',
+            email='',
             telegram_id=telegram_id,
         )
         user = api.users.get_by_tg_id(telegram_id)
@@ -40,8 +40,8 @@ def add_generation(update, context):
 
     context.job_queue.run_repeating(
         start_job,
-        interval=5,
-        first=5,
+        interval=120,  # noqa: WPS432
+        first=120,
         context=[telegram_id, generation.uid],
     )
 
