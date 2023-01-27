@@ -2,9 +2,9 @@ import logging
 
 from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 
+from bot.config import conf
 from bot.utils.handlers import add_generation, get_user_generations, start, start_dialogue
 from bot.utils.menu import cmnd
-from settings import API_KEY
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO,
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def main() -> None:
-    my_bot = Updater(API_KEY, use_context=True)
+    my_bot = Updater(conf.api_key, use_context=True)
 
     dp = my_bot.dispatcher  # type: ignore
 
