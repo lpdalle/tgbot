@@ -27,7 +27,7 @@ def add_generation(update, context):
         login = update.message.chat.first_name.lower()
         api.users.add(
             login=login,
-            email='',
+            email=None,
             telegram_id=telegram_id,
         )
         user = api.users.get_by_tg_id(telegram_id)

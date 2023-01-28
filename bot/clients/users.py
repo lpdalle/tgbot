@@ -23,7 +23,7 @@ class UserClient:
         response.raise_for_status()
         return User(**response.json())
 
-    def add(self, login: str, email: str, telegram_id=None):
+    def add(self, login: str, email: str | None, telegram_id=None):
         url = f'{self.url}/api/v1/users/'
         user = {
             'login': login,
