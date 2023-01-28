@@ -1,7 +1,6 @@
 from bot.clients.generations import GenerationClient
 from bot.clients.users import UserClient
-
-base_url = 'http://127.0.0.1:5000'
+from bot.config import conf
 
 
 class ApiClient:
@@ -10,4 +9,4 @@ class ApiClient:
         self.users = UserClient(url)
 
 
-api = ApiClient(base_url)
+api = ApiClient(conf.base_url)
